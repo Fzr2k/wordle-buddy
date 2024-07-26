@@ -1,4 +1,5 @@
 import React from 'react';
+import Letters from '../letters';
 
 const Form = () => {
   return (
@@ -9,30 +10,12 @@ const Form = () => {
         {/* First Row of Inputs */}
         <h1 className='text-xl text-left'>🟩 Correct Letters</h1>
         <p className='text-left'>Letters in the word and in the correct position (green tiles)</p>
-        <div className="flex space-x-6 my-4 justify-center">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <input
-              key={index}
-              type="text"
-              maxLength={1}
-              className="w-10 h-10 text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          ))}
-        </div>
+        <Letters/>
         
         {/* Second Row of Inputs */}
         <h1 className='text-xl text-left'>🟨 Misplaced Letters</h1>
         <p className='text-left'>Letters in the word but in the wrong position (yellow tiles)</p>
-        <div className="flex space-x-6 my-4 justify-center">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <input
-              key={index}
-              type="text"
-              maxLength={1}
-              className="w-10 h-10 text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          ))}
-        </div>
+        <Letters/>
 
         {/* Simple Text Input */}
         <h1 className='text-xl text-left'>⬛ Excluded Letters</h1>
