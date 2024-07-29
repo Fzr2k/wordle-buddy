@@ -10,12 +10,12 @@ const Form = () => {
         {/* First Row of Inputs */}
         <h1 className='text-xl text-left'>🟩 Correct Letters</h1>
         <p className='text-left'>Letters in the word and in the correct position (green tiles)</p>
-        <Letters/>
+        <Letters type='correct'/>
         
         {/* Second Row of Inputs */}
         <h1 className='text-xl text-left'>🟨 Misplaced Letters</h1>
         <p className='text-left'>Letters in the word but in the wrong position (yellow tiles)</p>
-        <Letters/>
+        <Letters type='incorrect'/>
 
         {/* Simple Text Input */}
         <h1 className='text-xl text-left'>⬛ Excluded Letters</h1>
