@@ -1,16 +1,17 @@
 "use client";
-import React, { useRef, useState, useEffect, createRef } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface LettersProps {
   type: string;
+  letters: string[];
+  setLetters: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const Letters: React.FC<LettersProps> = ({ type }) => {
+const Letters: React.FC<LettersProps> = ({ type, letters, setLetters }) => {
   const numInputs = 5;
   const [letterRefs, setLetterRefs] = useState<React.RefObject<HTMLInputElement>[]>([]);
-  const [values, setValues] = useState<string[]>(Array(numInputs).fill(''));
 
   useEffect(() => {
     setLetterRefs((refs) =>
@@ -36,7 +37,7 @@ const Letters: React.FC<LettersProps> = ({ type }) => {
     if (!/^[A-Z]$/.test(newValue)) {
       input.value = '';
       newValue = '';
-    } else if (type === 'incorrect' && values.includes(newValue)) {
+    } else if (type === 'incorrect' && letters.includes(newValue)) {
       input.value = '';
       newValue = '';
       toast.error('This letter cannot be repeated.', {
@@ -48,14 +49,14 @@ const Letters: React.FC<LettersProps> = ({ type }) => {
         draggable: true,
         progress: undefined,
       });
-    } 
+    }
 
-    setValues(values.map((val, i) => (i === index ? newValue : val)));
+    setLetters(letters.map((val, i) => (i === index ? newValue : val)));
   };
 
   const handleInputBlur = (e: React.FormEvent<HTMLInputElement>, index: number) => {
     if (e.currentTarget.value === '') {
-      setValues(values.map((val, i) => (i === index ? '' : val)));
+      setLetters(letters.map((val, i) => (i === index ? '' : val)));
     }
   };
 
@@ -69,7 +70,8 @@ const Letters: React.FC<LettersProps> = ({ type }) => {
             ref={ref}
             type="text"
             maxLength={1}
-            className={`w-10 h-10 text-center border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${values[index] ? (type === 'correct' ? 'bg-background' : 'bg-btn') : 'bg-white'} ${(type === 'correct' ? 'border-background' : 'border-btn')} font-bold uppercase`}
+            value={letters[index]}
+            className={`w-10 h-10 text-center border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${letters[index] ? (type === 'correct' ? 'bg-background' : 'bg-btn') : 'bg-white'} ${(type === 'correct' ? 'border-background' : 'border-btn')} font-bold uppercase`}
             onInput={(e) => handleInput(e, index)}
             onBlur={(e) => handleInputBlur(e, index)}
           />
