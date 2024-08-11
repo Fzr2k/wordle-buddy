@@ -20,20 +20,17 @@ const Letters: React.FC<LettersProps> = ({ type }) => {
     );
   }, [numInputs]);
 
-  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+  const handleInput = (e: React.FormEvent<HTMLInputElement>, index: number) => {
     const allowedKeys = ['Shift', 'Tab', 'ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft'];
-    if (!allowedKeys.includes(e.key) && /^[a-zA-Z]$/.test(e.key) && e.currentTarget.value.length === e.currentTarget.maxLength) {
+    if (!allowedKeys.includes(e.currentTarget.value) && /^[a-zA-Z]$/.test(e.currentTarget.value) && e.currentTarget.value.length === e.currentTarget.maxLength) {
       if (index < letterRefs.length - 1) {
         letterRefs[index + 1].current?.focus();
       }
-    } else if (e.currentTarget.value.length === e.currentTarget.maxLength - 1 && e.key !== 'Tab') {
+    } else if (e.currentTarget.value.length === e.currentTarget.maxLength - 1 && e.currentTarget.value !== 'Tab') {
       if (index - 1 >= 0) {
         letterRefs[index - 1].current?.focus();
       }
     }
-  };
-
-  const handleInput = (e: React.FormEvent<HTMLInputElement>, index: number) => {
     const input = e.currentTarget;
     let newValue = input.value.toUpperCase();
     if (!/^[A-Z]$/.test(newValue)) {
@@ -73,7 +70,6 @@ const Letters: React.FC<LettersProps> = ({ type }) => {
             type="text"
             maxLength={1}
             className={`w-10 h-10 text-center border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 ${values[index] ? (type === 'correct' ? 'bg-background' : 'bg-btn') : 'bg-white'} ${(type === 'correct' ? 'border-background' : 'border-btn')} font-bold uppercase`}
-            onKeyUp={(e) => handleKeyUp(e, index)}
             onInput={(e) => handleInput(e, index)}
             onBlur={(e) => handleInputBlur(e, index)}
           />
